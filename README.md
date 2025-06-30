@@ -25,14 +25,30 @@ A scalable, thread-safe backend for processing loan applications, built with Spr
 
 ## Architecture
 
-```mermaid
-flowchart TD
-    A[API Controller] --> B[Service Layer]
-    B --> C[Repository]
-    C --> D[(Database)]
-    B -->|Async| E[Background Processor]
-    B --> F[NotificationService (Mock)]
+**Normal Flow:**
+
 ```
+User/API
+   |
+   v
+Controller (REST)
+   |
+   v
+Service Layer (Business Logic)
+   |
+   v
+Repository (JPA)
+   |
+   v
+Database (PostgreSQL)
+```
+
+**Background Processing:**
+- A scheduled background job picks up new loan applications and processes them concurrently (thread pool).
+- If a loan needs human review, it is assigned to an agent and a notification is sent.
+
+**Notifications:**
+- Mocked push notifications to agents/managers and SMS to customers are logged.
 
 ## Setup & Run
 

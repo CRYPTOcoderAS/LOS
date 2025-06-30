@@ -43,6 +43,6 @@ class AgentControllerTest {
         mockMvc.perform(put("/api/v1/agents/1/loans/2/decision")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
     }
 } 
